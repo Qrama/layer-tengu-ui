@@ -1,0 +1,5 @@
+includes: ['layer:basic', 'layer:apt', 'layer:nginx-passenger', 'interface:sojobo']
+repo: git@github.com:Qrama/Sojobo-api.git
+options:
+  apt:
+    packages: ['letsencrypt']
