@@ -1,5 +1,7 @@
 # Introduction
-This is the User interface for the Tengu platform.
+This is the charm for User interface for the Tengu platform.
+
+The User interface itself can be found <a href="https://github.com/IBCNServices/tengu-browser/tree/juju2.0">here</a>.
 
 Since it is still in beta, any suggestions and bugs are welcome on <a href="https://github.com/Qrama/layer-tengu-ui/issues">Github</a>
 
@@ -30,5 +32,5 @@ After the config option setup=httpsletsencrypt and manually generating the key, 
 Report bugs on <a href="https://github.com/Qrama/layer-tengu-ui/issues">Github</a>
 
 # Author
-Charm: Mathijs Moerman <a href="mailto:mathijs.moerman@qrama.io">mathijs.moerman@qrama.io</a>
 User interface: Gregory Van Seghbroeck <a href="mailto:gregory.vanseghbroeck@qrama.io">gregory.vanseghbroeck@qrama.io</a>
+Charm: Mathijs Moerman <a href="mailto:mathijs.moerman@qrama.io">mathijs.moerman@qrama.io</a>

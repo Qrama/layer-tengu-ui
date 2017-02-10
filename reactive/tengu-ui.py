@@ -131,7 +131,7 @@ def configure(sojobo):
     set_state('tengu.configured')
 
 
-@when('sojobo.installed', 'nginx.passenger.available')
+@when('tengu.installed', 'nginx.passenger.available')
 @when_not('sojobo.available')
 def waiting_for_relation():
     status_set('blocked', 'The Tengu-UI is installed. Waiting for relation with Sojobo-API!')
