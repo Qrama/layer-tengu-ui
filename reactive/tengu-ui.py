@@ -14,8 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # pylint: disable=c0111,c0103,c0301
-
-from hashlib import sha256
 import os
 import shutil
 import subprocess
@@ -23,9 +21,8 @@ import subprocess
 from charmhelpers.core.templating import render
 from charmhelpers.core.hookenv import status_set, log, config, open_port, close_port, unit_public_ip
 from charmhelpers.core.host import service_restart, chownr, adduser
-from charmhelpers.contrib.python.packages import pip_install
-
 from charms.reactive import hook, when, when_not, set_state
+
 
 API_DIR = config()['api-dir']
 USER = config()['user']
@@ -51,21 +48,16 @@ def upgrade_charm():
 
 @when('tengu.configured', 'nginx.passenger.available')
 def configure_webapp():
-    if SETUP == 'httpsclient':
+    if SETUP == 'client':
         close_port(80)
         close_port(443)
         render_httpsclient()
         open_port(443)
         open_port(80)
-    elif SETUP == 'httpsletsencrypt':
-        close_port(80)
-        close_port(443)
-        render_httpsletsencrypt()
-        open_port(80)
     else:
         close_port(80)
         close_port(443)
-        render_http()
+        render_httpsletsencrypt()
         open_port(80)
     restart_api()
     set_state('tengu.running')
@@ -73,21 +65,12 @@ def configure_webapp():
 
 
 def install_tengu():
-    # Install pip pkgs
-    for pkg in ['pyyaml', 'gitpython']:
-        pip_install(pkg)
     mergecopytree('files/tengu_ui', API_DIR)
     os.mkdir('{}/files'.format(API_DIR))
     adduser(USER)
     os.mkdir('/home/{}'.format(USER))
     chownr('/home/{}'.format(USER), USER, USER, chowntopdir=True)
     chownr(API_DIR, USER, GROUP, chowntopdir=True)
-    status_set('blocked', 'The Tengu-UI is installed. Waiting for relation with Sojobo-API!')
-
-
-def render_http():
-    context = {'hostname': HOST, 'user': USER, 'rootdir': API_DIR}
-    render('http.conf', '/etc/nginx/sites-enabled/tengu.conf', context)
 
 
 def render_httpsclient():
@@ -142,10 +125,16 @@ def configure(sojobo):
     data = list(sojobo.connection())[0]
     render('settings.js', '{}/scripts/settings.template'.format(API_DIR),
            {'sojobo_url': data['url'],
-            'bundles_url': 'https://raw.githubusercontent.com/IBCNServices/bundle-{{bundlename}}/master/bundle.json',
-            'mappings_url': '',
+            'bundles_url': config()['bundles_url'],
+            'mappings_url': config()['mappings_url'],
             'api_key': data['api-key']})
     set_state('tengu.configured')
+
+
+@when('sojobo.installed', 'nginx.passenger.available')
+@when_not('sojobo.available')
+def waiting_for_relation():
+    status_set('blocked', 'The Tengu-UI is installed. Waiting for relation with Sojobo-API!')
 ###############################################################################
 # UTILS
 ###############################################################################
@@ -170,8 +159,3 @@ def mergecopytree(src, dst, symlinks=False, ignore=None):
             mergecopytree(src_item, dst_item, symlinks, ignore)
         else:
             shutil.copy2(src_item, dst_item)
-
-
-def generate_api_key():
-    with open("/{}/api-key".format(API_DIR), "w") as key:
-        key.write(sha256(os.urandom(256)).hexdigest())

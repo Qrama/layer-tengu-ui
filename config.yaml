@@ -16,10 +16,10 @@ options:
       The linux group of which nginx is a member
   setup:
     type: string
-    default: httpsletsencrypt
+    default: letsencrypt
     description: |
-      Choose the type of install: http [http], https [httpsclient] with client certificates, https [httpsletsencrypt] with
-      letsencrypt setup. If an option is entered which does not match [http, httpsclient, httpsletsencrypt], defaults to http.
+      Choose the type of install: https [client] with client certificates, https [letsencrypt] with
+      letsencrypt certificates. If an option is entered which does not match [client, letsencrypt], defaults to letsencrypt.
       the setup and config for letsencrypt is a manual process, which is documented in the readme.
   fullchain:
     type: string
@@ -40,3 +40,13 @@ options:
     type: string
     default: "127.0.0.1"
     description: listen address
+  bundles_url:
+    type: string
+    default: "https://raw.githubusercontent.com/IBCNServices/bundle-{{bundlename}}/master/bundle.json"
+    description: |
+      Specify the location of custom bundles
+  mappings_url:
+    type: string
+    default: ''
+    description: |
+      Specify the location of needed mappings between applications
