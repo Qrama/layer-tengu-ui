@@ -87,7 +87,7 @@ def install_tengu():
 
 def render_http():
     context = {'hostname': HOST, 'user': USER, 'rootdir': API_DIR}
-    render('sojobo-http.conf', '/etc/nginx/sites-enabled/sojobo.conf', context)
+    render('http.conf', '/etc/nginx/sites-enabled/tengu.conf', context)
 
 
 def render_httpsclient():
@@ -97,11 +97,11 @@ def render_httpsclient():
         chownr('/etc/letsencrypt/live/{}'.format(HOST), GROUP, 'root', chowntopdir=True)
         context['fullchain'] = '/etc/letsencrypt/live/{}/fullchain.pem'.format(HOST)
         context['privatekey'] = '/etc/letsencrypt/live/{}/privkey.pem'.format(HOST)
-        render('sojobo-httpsclient.conf', '/etc/nginx/sites-enabled/sojobo.conf', context)
+        render('httpsclient.conf', '/etc/nginx/sites-enabled/tengu.conf', context)
     elif config()['fullchain'] != '' and config()['privatekey'] != '':
         context['fullchain'] = config()['fullchain']
         context['privatekey'] = config()['privatekey']
-        render('sojobo-httpsclient.conf', '/etc/nginx/sites-enabled/sojobo.conf', context)
+        render('httpsclient.conf', '/etc/nginx/sites-enabled/tengu.conf', context)
     else:
         status_set('blocked', 'Invalid fullchain and privatekey config')
 
@@ -111,7 +111,7 @@ def render_httpsletsencrypt():
     if not os.path.isdir('{}/.well-known'.format(API_DIR)):
         os.mkdir('{}/.well-known'.format(API_DIR))
     chownr('{}/.well-known'.format(API_DIR), USER, GROUP, chowntopdir=True)
-    render('sojobo-httpsletsencrypt.conf', '/etc/nginx/sites-enabled/sojobo.conf', context)
+    render('httpsletsencrypt.conf', '/etc/nginx/sites-enabled/tengu.conf', context)
 
 
 def restart_api():

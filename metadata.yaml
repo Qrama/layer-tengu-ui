@@ -1,5 +1,5 @@
-name: sojobo-api
-summary: This Charm sets up a Tengu Sojobo API.
+name: tengu-ui
+summary: This Charm sets up a Tengu UI.
 maintainer: Mathijs Moerman <mathijs.moerman@qrama.io>
 description: |
 tags:

@@ -1,5 +1,5 @@
 includes: ['layer:basic', 'layer:apt', 'layer:nginx-passenger', 'interface:sojobo']
-repo: git@github.com:Qrama/Sojobo-api.git
+repo: git@github.com:Qrama/layer-tengu-ui.git
 options:
   apt:
     packages: ['letsencrypt']
