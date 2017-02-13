@@ -122,12 +122,17 @@ def feature_flags_changed():
 @when('sojobo.available')
 @when_not('tengu.running')
 def configure(sojobo):
+    loc = '{}/scripts'.format(API_DIR)
+    for i in os.listdir(loc):
+        if os.path.isfile(os.path.join(loc, i)) and 'settings.js' in i:
+            prefix = i.split('.')[0]
     data = list(sojobo.connection())[0]
-    render('settings.js', '{}/scripts/settings.template'.format(API_DIR),
+    render('settings.js', '{}/scripts/{}.settings.js'.format(API_DIR, prefix),
            {'sojobo_url': data['url'],
             'bundles_url': config()['bundles_url'],
             'mappings_url': config()['mappings_url'],
-            'api_key': data['api-key']})
+            'api_key': data['api-key'],
+            'init_cmd': ':signin'})
     set_state('tengu.configured')
 
 
