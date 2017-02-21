@@ -47,6 +47,7 @@ def upgrade_charm():
 
 
 @when('tengu.configured', 'nginx.passenger.available')
+@when_not('tengu.running')
 def configure_webapp():
     if SETUP == 'client':
         close_port(80)
