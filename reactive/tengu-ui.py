@@ -21,7 +21,7 @@ import subprocess
 from charmhelpers.core.templating import render
 from charmhelpers.core.hookenv import status_set, log, config, open_port, close_port, unit_public_ip
 from charmhelpers.core.host import service_restart, chownr, adduser
-from charms.reactive import hook, when, when_not, set_state
+from charms.reactive import hook, when, when_not, set_state, remove_state
 
 
 API_DIR = config()['api-dir']
@@ -49,16 +49,21 @@ def upgrade_charm():
 @when('tengu.configured', 'nginx.passenger.available')
 @when_not('tengu.running')
 def configure_webapp():
-    if SETUP == 'client':
+    if SETUP == 'https':
         close_port(80)
         close_port(443)
         render_httpsclient()
         open_port(443)
         open_port(80)
-    else:
+    elif SETUP == 'letsencrypt':
         close_port(80)
         close_port(443)
         render_httpsletsencrypt()
+        open_port(80)
+    else:
+        close_port(80)
+        close_port(443)
+        render_http()
         open_port(80)
     restart_api()
     set_state('tengu.running')
@@ -81,11 +86,11 @@ def render_httpsclient():
         chownr('/etc/letsencrypt/live/{}'.format(HOST), GROUP, 'root', chowntopdir=True)
         context['fullchain'] = '/etc/letsencrypt/live/{}/fullchain.pem'.format(HOST)
         context['privatekey'] = '/etc/letsencrypt/live/{}/privkey.pem'.format(HOST)
-        render('httpsclient.conf', '/etc/nginx/sites-enabled/tengu.conf', context)
+        render('https.conf', '/etc/nginx/sites-enabled/tengu.conf', context)
     elif config()['fullchain'] != '' and config()['privatekey'] != '':
         context['fullchain'] = config()['fullchain']
         context['privatekey'] = config()['privatekey']
-        render('httpsclient.conf', '/etc/nginx/sites-enabled/tengu.conf', context)
+        render('https.conf', '/etc/nginx/sites-enabled/tengu.conf', context)
     else:
         status_set('blocked', 'Invalid fullchain and privatekey config')
 
@@ -95,7 +100,12 @@ def render_httpsletsencrypt():
     if not os.path.isdir('{}/.well-known'.format(API_DIR)):
         os.mkdir('{}/.well-known'.format(API_DIR))
     chownr('{}/.well-known'.format(API_DIR), USER, GROUP, chowntopdir=True)
-    render('httpsletsencrypt.conf', '/etc/nginx/sites-enabled/tengu.conf', context)
+    render('letsencrypt.conf', '/etc/nginx/sites-enabled/tengu.conf', context)
+
+
+def render_http():
+    context = {'hostname': HOST, 'user': USER, 'rootdir': API_DIR}
+    render('http.conf', '/etc/nginx/sites-enabled/tengu.conf', context)
 
 
 def restart_api():
@@ -140,6 +150,8 @@ def configure(sojobo):
 @when('tengu.installed', 'nginx.passenger.available')
 @when_not('sojobo.available')
 def waiting_for_relation():
+    remove_state('tengu.configured')
+    remove_state('tengu.running')
     status_set('blocked', 'The Tengu-UI is installed. Waiting for relation with Sojobo-API!')
 ###############################################################################
 # UTILS
