@@ -1,4 +1,4 @@
-<div ng-controller="SojoboAuthCtrl">
+<div ng-controller="UserInfoCtrl">
   <div class="outer">
     <div class="code-bar">
       <ul class="actions list-inline">
@@ -30,10 +30,7 @@
             <div ng-show="!static_is_authenticated" class="section row-fluid summary">
               <div class="details">
                 <h3>User is not signed in</h3>
-                <p class="lead">
-                  There is currently no user signed in. Please use your 
-                  credentials to <code exec-topic="signin">signin</code>.
-                </p>
+                <p class="lead">You are not signed in. Please use your credentials to <code exec-topic="signin">signin</code>.</p>
               </div>
             </div>
             <div ng-show="static_is_authenticated &amp;&amp; static_user" class="section row-fluid summary">
@@ -42,7 +39,7 @@
                 <p class="lead">Lovely to see you.</p>
               </div>
               <div ng-show="user_info" class="details col-sm-9">
-                <table ng-show="models != null &amp;&amp; models.length &gt; 0" class="table table-condensed">
+                <table ng-if="models != null &amp;&amp; models.length &gt; 0" class="table table-condensed">
                   <thead>
                     <td>Model</td>
                     <td>Controller</td>
@@ -62,6 +59,9 @@
                   </tr>
                 </table>
                 <p ng-show="models.length == 0" class="lead">You don't have any models yet.<br>Do you want to create a new model?</p>
+              </div>
+              <div ng-hide="user_info" class="details col-sm-9">
+                <p class="lead">We are loading your controllers and models.</p>
               </div>
             </div>
           </div>

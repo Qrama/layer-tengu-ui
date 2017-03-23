@@ -72,11 +72,13 @@ def configure_webapp():
 
 def install_tengu():
     mergecopytree('files/tengu_ui', API_DIR)
-    os.mkdir('{}/files'.format(API_DIR))
-    adduser(USER)
-    os.mkdir('/home/{}'.format(USER))
-    chownr('/home/{}'.format(USER), USER, USER, chowntopdir=True)
-    chownr(API_DIR, USER, GROUP, chowntopdir=True)
+    try:
+        os.mkdir('/home/{}'.format(USER))
+        adduser(USER)
+        chownr('/home/{}'.format(USER), USER, USER, chowntopdir=True)
+        chownr(API_DIR, USER, GROUP, chowntopdir=True)
+    except FileExistsError:
+        pass
 
 
 def render_httpsclient():

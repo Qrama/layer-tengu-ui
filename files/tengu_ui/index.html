@@ -268,8 +268,13 @@
                   </label>
                 </div>-->
                 <div class="form-group">
-                  <label for="sojoboUrl" tooltip="You connect to the Sojobo to create a new Hauchiwa" tooltip-placement="top">Sojobo/Hauchiwa URL
+                  <label for="sojoboUrl" tooltip="You walk up to the Sojobo to release the power of Tengu, please enter the Sojobo's full URL." tooltip-placement="top">Sojobo/Hauchiwa URL
                     <input id="sojoboUrl" type="string" ng-model="settings.endpoint.tengu" ng-change="save()" class="form-control input">
+                  </label>
+                </div>
+                <div class="form-group">
+                  <label for="sojoboApiKey" tooltip="The Sojobo is not accessible by everybody, please provide the api-key." tooltip-placement="top">Sojobo/Hauchiwa URL
+                    <input id="sojoboApiKey" type="string" ng-model="settings.apiKey" ng-change="save()" class="form-control input">
                   </label>
                 </div>
                 <div class="form-group">
@@ -568,8 +573,8 @@
 
     </script>
     <script src="scripts/d0864a2d.components.js"></script>
-    <script src="scripts/cc4df803.settings.js"></script>
-    <script src="scripts/91d9f8ac.scripts.js"></script>
+    <script src="scripts/893d1d9d.settings.js"></script>
+    <script src="scripts/e8b3782b.scripts.js"></script>
     <script src="lib/geni-auth.js"></script>
   </body>
 </html>
