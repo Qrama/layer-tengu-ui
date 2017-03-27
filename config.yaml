@@ -42,7 +42,7 @@ options:
     description: listen address
   bundles_url:
     type: string
-    default: "https://raw.githubusercontent.com/IBCNServices/bundle-{{bundlename}}/master/bundle.json"
+    default: "http://tengu.io/bundles/{{bundlename}}.json"
     description: |
       Specify the location of custom bundles
   mappings_url:

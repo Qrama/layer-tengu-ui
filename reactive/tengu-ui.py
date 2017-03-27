@@ -42,6 +42,7 @@ def install():
 @hook('upgrade-charm')
 def upgrade_charm():
     log('Updating Tengu-UI')
+    os.rmdir(API_DIR)
     install_tengu()
     set_state('tengu.installed')
 
