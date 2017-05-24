@@ -21,7 +21,7 @@
       <li ng-if="!settings.filemode"><a ng-click="editor.setContent(&quot;&quot;)" ng-class="{active: editorHasContent, 'sl-delete-filled': hoveringDelete}" ng-mouseenter="hoveringDelete=true" ng-mouseleave="hoveringDelete=false" tooltip="Clear" tooltip-placement="left" class="circled delete sl sl-delete-circle"></a></li>
       <li><a ng-click="editor.execScript(editor.content)" ng-mouseenter="hoveringPlay=true" ng-mouseleave="hoveringPlay=false" ng-class="{active: editorHasContent, 'sl-play-filled': hoveringPlay}" tooltip="Play" tooltip-placement="left" class="circled play sl sl-play"></a></li>
     </ul>
-    <div ng-if="editor.showMessage" ng-class="editor.errorCode" class="message-bar error slide-down"><span ng-bind-html-unsafe="editor.errorMessage"></span> Type <code click-to-code="':help commands'">:help commands</code> for a list of available commands.
+    <div ng-if="editor.showMessage" ng-class="editor.errorCode" class="message-bar error slide-down"><span ng-bind-html="editor.errorMessage">Type <code click-to-code="':help commands'">:help commands</code> for a list of available commands.</span>
       <div class="actions"><a ng-click="editor.showMessage = null" class="fa fa-times-circle"></a></div>
     </div>
     <div ng-if="unauthorized" ng-class="editor.errorCode" class="message-bar info"><span>

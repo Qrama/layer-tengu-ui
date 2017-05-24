@@ -15,33 +15,8 @@
       <button ng-click="CurrentUser.login(); toggleDrawer('profile') " class="btn btn-popup btn-popup">Sign in</button>
     </p>
   </div>
-  <div ng-if="!currentUser &amp;&amp; syncService.hasConnection" ng-controller="SyncSigninController">
-    <p>&nbsp;</p>
-    <h5>Sign In or Register</h5>
-    <p>
-      Neo4j Browser Sync is a companion cloud service for Neo4j Browser. Connect through a simple social sign-in
-      to get started.
-    </p>
-    <p> <a play-topic="neo4j-sync">About Neo4j Browser Sync</a></p>
-    <alert ng-hide="goodBrowser" class="top-padded">
-       
-      Neo4j Browser Sync is currently only available for some versions of Internet Explorer.
-      If you have any trouble, we'd love to hear from you at&nbsp;<a href="mailto:feedback@neotechnology.com">feedback@neotechnology.com</a>
-    </alert>
-    <button ng-click="signInToSync()" class="btn btn-popup">Sign In / Register</button>
-    <div class="box-max">
-      <div class="checkbox">
-        <label for="acceptedTermsAndPrivacyCheckBox" class="muted">
-          <input id="acceptedTermsAndPrivacyCheckBox" type="checkbox" ng-model="settings.acceptedTermsAndPrivacy" ng-change="save()">By checking this box you are agreeing to the <a href="http://neo4j.com/terms/neo4j-browser-sync/">Neo4j Browser Sync Terms of Use</a>&nbsp;and our&nbsp;<a href="http://neo4j.com/privacy-policy/">Privacy Policy</a>.  
-        </label>
-      </div>
-    </div>
-    <alert ng-show="showSignupWarning" close="closeWarning()">Before you can sign in, please check the box above to agree to the terms of use and privacy policy.</alert>
-  </div>
   <div ng-if="!syncService.hasConnection &amp;&amp; !currentUser" class="connection-error">
     <p>&nbsp;</p>
-    <p>It is not possible to connect to Neo4j Browser Sync right now.</p>
+    <p>It is not possible to connect to the Sojobo right now.</p>
   </div>
 </div>
-<div id="footer"></div>#  p What's this?&nbsp;
-#    a(href="http://neo4j.com/neo4j-browser-sync") Learn More

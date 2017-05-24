@@ -28,7 +28,7 @@
         <article class="help">
           <div class="container-fluid">
             <div ng-show="!static_is_authenticated" class="section row-fluid summary">
-              <div class="summary col-sm-3">
+              <div class="summary col-sm-5">
                 <h3>Please Sign in with your Tengu Account</h3>
                 <p class="lead">
                   Almost all calls to Tengu's Sojobo require authentication.
@@ -36,7 +36,7 @@
                   username and password and we will register your user.
                 </p>
               </div>
-              <div class="details col-sm-9">
+              <div class="details col-sm-7">
                 <div class="form">
                   <div class="row">
                     <div class="col-sm-5">Username<br>
@@ -69,7 +69,12 @@
                 <ul class="big undecorated">
                   <li><span class="center-tbl-left-col inline">You are connected as user&nbsp;</span><code>{{static_user}}   </code></li>
                   <li>
-                    <p class="lead">What is next? TODO</p>
+                    <h3>What is next?</h3>
+                    <div class="row">
+                      <p class="lead col-sm-12 topic-bullets"> <a play-topic="tengu">Get started </a>with predefined models.</p>
+                      <p class="lead col-sm-12 topic-bullets">Create an <a click-to-command=":tengu model create">empty model</a></p>
+                      <p class="lead col-sm-12 topic-bullets">Show your <a click-to-command=":tengu user-info">user info</a></p>
+                    </div>
                   </li>
                 </ul>
               </div>

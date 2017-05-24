@@ -42,13 +42,13 @@
                 <table ng-if="models != null &amp;&amp; models.length &gt; 0" class="table table-condensed">
                   <thead>
                     <td>Model</td>
-                    <td>Controller</td>
+                    <td>Environment</td>
                     <td>Access level</td>
                     <td>&nbsp;</td>
                   </thead>
                   <tr ng-repeat="model in models">
                     <th>{{model.name}}</th>
-                    <td> <img src="images/{{model.type}}.svg">&nbsp;{{model.controller}}</td>
+                    <td> <img ng-src="images/{{model.type}}.svg">&nbsp;{{model.controller}}</td>
                     <td>{{model.access}}</td>
                     <td>
                       <ul class="actions list-inline">
@@ -58,10 +58,27 @@
                     </td>
                   </tr>
                 </table>
-                <p ng-show="models.length == 0" class="lead">You don't have any models yet.<br>Do you want to create a new model?</p>
+                <p ng-if="models.length == 0" class="lead">You don't have any models yet.<br><br>Do you want to create a new model?<br><a play-topic="tengu">Get started!</a>
+                  </p><p ng-if="models.length == 0 &amp;&amp; controllers != null &amp;&amp; controllers.length &gt; 0">There are already some environment availble for you:
+                    <table ng-if="models.length == 0 &amp;&amp; controllers != null &amp;&amp; controllers.length &gt; 0" class="table table-condensed">
+                      <thead>
+                        <td>Environment</td>
+                        <td>Type</td>
+                        <td>Access level</td>
+                      </thead>
+                      <tr ng-repeat="controller in controllers">
+                        <th>{{controller.name}}</th>
+                        <td> <img ng-src="images/{{controller.type}}.svg"></td>
+                        <td>{{controller.access}}</td>
+                      </tr>
+                    </table>
+                  </p>
+                
               </div>
               <div ng-hide="user_info" class="details col-sm-9">
-                <p class="lead">We are loading your controllers and models.</p>
+                <p class="lead">
+                  <div class="fa fa-spinner fa-spin"></div> We are loading your environments and models.
+                </p>
               </div>
             </div>
           </div>

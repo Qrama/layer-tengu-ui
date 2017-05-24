@@ -35,7 +35,7 @@ angular.module('neo4jApp.settings', ['neo4jApp.utils']).constant('Settings', {
     transaction: restAPI + "/transaction",
     authUser: baseURL + "/user",
     tengu: "https://demobackend.tengu.io",
-    bundles: "https://raw.githubusercontent.com/IBCNServices/bundle-{{bundlename}}/master/bundle.json",
+    bundles: "https://raw.githubusercontent.com/tengu-team/bundle-{{bundlename}}/master/bundle.json",
     mappings: "https://raw.githubusercontent.com/IBCNServices/tengu-charms/master/bundles/{{bundlename}}/mapping.json"
   },
   needAuthZ: true,
