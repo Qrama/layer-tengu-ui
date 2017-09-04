@@ -5,6 +5,9 @@ description: |
 tags:
   - big_data
 subordinate: false
+provides:
+  proxy:
+    interface: http
 requires:
   sojobo:
     interface: sojobo
